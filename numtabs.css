@@ -1,0 +1,175 @@
+/* ============================================
+   NumTabs - Tab Numbering for Zen Browser
+   
+   Features:
+   - Absolute tab numbers (position from left)
+   - Modern styling
+   - Theme variants
+   
+   Install: Copy to chrome/userChrome.css
+   ============================================ */
+
+/* ============================================
+   TAB NUMBERING
+   Uses CSS counters to show absolute position
+   ============================================ */
+
+/* Counter for tab numbering */
+.tabbrowser-tabs {
+  counter-reset: numtabs-counter;
+}
+
+.tabbrowser-tab {
+  counter-increment: numtabs-counter;
+}
+
+/* Show number on each tab */
+.tab-stack > .tab-content::after {
+  content: counter(numtabs-counter) !important;
+  position: absolute !important;
+  right: 6px !important;
+  top: 4px !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  font-family: "SF Mono", "Fira Code", monospace !important;
+  color: var(--numtabs-num-color, #abb2bf) !important;
+  background: var(--numtabs-num-bg, #3e4452) !important;
+  padding: 1px 5px !important;
+  border-radius: 3px !important;
+  z-index: 100 !important;
+}
+
+/* Current/selected tab - highlight */
+.tabbrowser-tab[selected="true"] .tab-stack > .tab-content::after {
+  background: var(--numtabs-active-bg, #61afef) !important;
+  color: var(--numtabs-active-color, #282c34) !important;
+  font-weight: 700 !important;
+}
+
+/* ============================================
+   COLOR THEMES
+   ============================================ */
+
+/* One Dark (default) */
+:root {
+  --numtabs-num-color: #abb2bf;
+  --numtabs-num-bg: #3e4452;
+  --numtabs-active-bg: #61afef;
+  --numtabs-active-color: #282c34;
+}
+
+/* Dracula */
+:root[data-theme="dracula"] {
+  --numtabs-num-color: #f8f8f2;
+  --numtabs-num-bg: #44475a;
+  --numtabs-active-bg: #bd93f9;
+  --numtabs-active-color: #282a36;
+}
+
+/* Nord */
+:root[data-theme="nord"] {
+  --numtabs-num-color: #eceff4;
+  --numtabs-num-bg: #4c566a;
+  --numtabs-active-bg: #88c0d0;
+  --numtabs-active-color: #2e3440;
+}
+
+/* Gruvbox */
+:root[data-theme="gruvbox"] {
+  --numtabs-num-color: #ebdbb2;
+  --numtabs-num-bg: #504945;
+  --numtabs-active-bg: #fabd2f;
+  --numtabs-active-color: #282828;
+}
+
+/* Catppuccin */
+:root[data-theme="catppuccin"] {
+  --numtabs-num-color: #cdd6f4;
+  --numtabs-num-bg: #45475a;
+  --numtabs-active-bg: #cba6f7;
+  --numtabs-active-color: #1e1e2e;
+}
+
+/* Tokyo Night */
+:root[data-theme="tokyo-night"] {
+  --numtabs-num-color: #c0caf5;
+  --numtabs-num-bg: #3b4261;
+  --numtabs-active-bg: #7aa2f7;
+  --numtabs-active-color: #1a1b26;
+}
+
+/* GitHub Dark */
+:root[data-theme="github-dark"] {
+  --numtabs-num-color: #c9d1d9;
+  --numtabs-num-bg: #484f58;
+  --numtabs-active-bg: #58a6ff;
+  --numtabs-active-color: #161b22;
+}
+
+/* ============================================
+   TAB VISUAL STYLING
+   ============================================ */
+
+/* Smooth transitions */
+.tabbrowser-tab,
+.tab-stack,
+.tab-content {
+  transition: all 0.15s ease !important;
+}
+
+/* Hover effect */
+.tabbrowser-tab:hover .tab-content {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Selected tab */
+.tabbrowser-tab[selected="true"] .tab-content {
+  background-color: rgba(97, 175, 239, 0.12) !important;
+}
+
+/* Subtle borders */
+.tabbrowser-tab {
+  border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Focus ring */
+.tabbrowser-tab:focus-visible .tab-content {
+  outline: 2px solid var(--numtabs-active-bg) !important;
+  outline-offset: -2px !important;
+}
+
+/* ============================================
+   PINNED TABS - Hide numbers
+   ============================================ */
+
+.tabbrowser-tab[pinned="true"] .tab-stack > .tab-content::after {
+  display: none !important;
+}
+
+/* ============================================
+   COMPACT MODE
+   ============================================ */
+
+@media (max-width: 700px) {
+  .tab-stack > .tab-content::after {
+    font-size: 8px !important;
+    padding: 1px 3px !important;
+    right: 4px !important;
+  }
+}
+
+/* ============================================
+   HIDDEN LABELS
+   When tabs get small, show only icon + number
+   ============================================ */
+
+.tabbrowser-tab[overflow="true"] .tab-label {
+  display: none !important;
+}
+
+.tabbrowser-tab[overflow="true"] .tab-content::after {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  right: auto !important;
+}
