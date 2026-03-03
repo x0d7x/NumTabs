@@ -2,6 +2,8 @@
 
 CSS-only tab numbering for Zen Browser. No JavaScript required!
 
+![NumTabs](https://i.imgur.com/enkewSF.png)
+
 ## Features
 
 - **Tab Numbers** - Each tab shows its position number (1, 2, 3...)
